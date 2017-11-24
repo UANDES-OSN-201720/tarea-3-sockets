@@ -5,11 +5,17 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('127.0.0.1', 8889))
 s.listen(10)
 c = {}
-users = []
+users = " "
+
 def clientthread(conn):
     while 1:
         data = conn.recv(1024)
+        data1 = conn.recv(1025)
         e = data.split('>')
+        if len(users) <= 3:
+            users.append(e[0])
+            data1 = users
+        conn.send(data1)  #Data1 tiene que ser string o buffer , no lista
         if len(e) == 3:
             if e[1] == 'show':
                 try:
@@ -32,7 +38,6 @@ def clientthread(conn):
                     c[e[1]] = []
                 c[e[1]].append(e[0]+'>'+e[2])
                 #C : Diccionario , Destinatario : Mensaje
-                print e
                 data = 'Ok'
         else:
             data = 'Error'
