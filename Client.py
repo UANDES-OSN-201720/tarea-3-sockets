@@ -17,6 +17,7 @@ def se(s):
         inp = raw_input()
         if inp == "show_users_online":
             s.send("show_users_online")
+
         if inp == "chat":
             name = raw_input("Ingrese nombre: ")
             asdf = name + '>'
@@ -25,11 +26,19 @@ def se(s):
                 print "\n"+asdf
                 s.send(asdf + asdf + raw_input())
                 #print s.recv(1024)
+                if raw_input() == "quit":
+                    start_new_thread(se, (s,))
+                    start_new_thread(re, (s,))
+                    break
 
         if inp == "chat2":
             while 1:
                 s.send(u + '>' + raw_input())
                 print s.recv(1024)
+                if raw_input() == "quit":
+                    start_new_thread(se, (s,))
+                    start_new_thread(re, (s,))
+                    break
 def re(s):
     while 1:
         s.send(u + '>show>')
