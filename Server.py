@@ -5,7 +5,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('127.0.0.1', 8889))
 s.listen(10)
 c = {}
-users = []
+users = ""
 
 def clientthread(conn):
     while 1:
@@ -42,12 +42,8 @@ def clientthread(conn):
 
 while 1:
     conn, addr = s.accept()
-
-    #data1 = conn.recv(1024)
-    #e1 = data1.split('>')
-   # users.append(e1[0])
+    #users += conn.recv(1024)
     #print users
-    #conn.send(data)
 
 
     start_new_thread(clientthread ,(conn,))
