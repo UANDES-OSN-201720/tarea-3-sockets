@@ -5,17 +5,13 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('127.0.0.1', 8889))
 s.listen(10)
 c = {}
-users = " "
+users = []
 
 def clientthread(conn):
     while 1:
         data = conn.recv(1024)
-        data1 = conn.recv(1025)
         e = data.split('>')
-        if len(users) <= 3:
-            users.append(e[0])
-            data1 = users
-        conn.send(data1)  #Data1 tiene que ser string o buffer , no lista
+
         if len(e) == 3:
             if e[1] == 'show':
                 try:
@@ -43,7 +39,16 @@ def clientthread(conn):
             data = 'Error'
         conn.send(data)
     conn.close()
+
 while 1:
     conn, addr = s.accept()
+
+    #data1 = conn.recv(1024)
+    #e1 = data1.split('>')
+   # users.append(e1[0])
+    #print users
+    #conn.send(data)
+
+
     start_new_thread(clientthread ,(conn,))
 s.close()
