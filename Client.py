@@ -29,22 +29,22 @@ def se(s):
                 print "\n"+sender
                 s.send(sender + sender + raw_input())
                 #print s.recv(1024)
-                if raw_input() == "quit":
-                    start_new_thread(se, (s,))
-                    start_new_thread(re, (s,))
-                    break
+               # if raw_input() == "quit":
+                #    start_new_thread(se, (s,))
+                 #   start_new_thread(re, (s,))
+                 #   break
 
         if inp == "chat2":
             while 1:
                 s.send(u + '>' + raw_input())
                 print s.recv(1024)
-                if raw_input() == "quit":
-                    start_new_thread(se, (s,))
-                    start_new_thread(re, (s,))
-                    break
+                #if raw_input() == "quit":
+                 #   start_new_thread(se, (s,))
+                  #  start_new_thread(re, (s,))
+                  #  break
         if inp == "send_file":
             f = raw_input("Ingrese ruta del archivo: ")
-            with open(f, 'wb') as write:
+            with open(f, 'wb') as file_to_write:
                 while True:
                     data = s.recv(1024)
                     if not data: break
