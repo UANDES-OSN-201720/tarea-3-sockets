@@ -5,13 +5,16 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(('127.0.0.1', 8889))
 u = raw_input('Username: ')
 
-print 'To send: recipient>message'
+print 'Para enviar: Destinatario>Mensaje'
+
+
+
 def se(s):
     if raw_input("Para ver comandos ingresar: commands\n") == "commands":
         print "show_users_online                Para mostar usuarios concectados"
         print "chat                             Para abrir conversacion con un usuario"
         print "chat2                            Para crear grupo con uno o mas usuarios"
-        print "send_file_to_name1,name2         Para enviar un archivo a uno o mas usuarios"
+        print "send_file                        Para enviar un archivo a uno o mas usuarios"
         print "\n"
 
         inp = raw_input()
@@ -20,11 +23,11 @@ def se(s):
 
         if inp == "chat":
             name = raw_input("Ingrese nombre: ")
-            asdf = name + '>'
+            sender = name + '>'
             while 1:
 
-                print "\n"+asdf
-                s.send(asdf + asdf + raw_input())
+                print "\n"+sender
+                s.send(sender + sender + raw_input())
                 #print s.recv(1024)
                 if raw_input() == "quit":
                     start_new_thread(se, (s,))
@@ -39,6 +42,18 @@ def se(s):
                     start_new_thread(se, (s,))
                     start_new_thread(re, (s,))
                     break
+        if inp == "send_file":
+            f = raw_input("Ingrese ruta del archivo: ")
+            with open(f, 'wb') as write:
+                while True:
+                    data = s.recv(1024)
+                    if not data: break
+                    file_to_write.write(data)
+                    file_to_write.close()
+                    break
+            #bytes = open(f).read()
+            #s.send(bytes)
+
 def re(s):
     while 1:
         s.send(u + '>show>')
